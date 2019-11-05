@@ -1,5 +1,6 @@
 package com.fju.water;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -7,6 +8,8 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     int next1;
     double month2;
     double next2;
+    int monthlength;
+    int nextlength;
 
 
     @Override
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         month = findViewById(R.id.month);
         next = findViewById(R.id.next);
+
 
 
        FloatingActionButton fab = findViewById(R.id.fab);
@@ -42,36 +48,67 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public  void  count(View view){
-        month1 = Integer.parseInt(month.getText().toString());
-        next1 = Integer.parseInt(next.getText().toString());
-        if(month1>1&&month1<10){
+        monthlength = month.getText().toString().length();
+        nextlength = next.getText().toString().length();
+        try {
+            month1 = Integer.parseInt(month.getText().toString());
+        }catch (Exception e){
+            month1 = 0;
+        }
+        try {
+            next1 = Integer.parseInt(next.getText().toString());
+        }catch (Exception e){
+            next1 = 0;
+        }
+        if(month1 >= 1 && month1 <= 10){
             month2 = month1*7.35;
-        }else if(month1>11&&month1<30){
+        }else if(month1 >= 11 && month1 <= 30){
             month2 = (month1*9.45)-21;
-        }else if(month1>31&&month1<50){
+        }else if(month1 >= 31 && month1 <=50){
             month2 = (month1*11.55)-84;
-        }else if(month1>51){
+        }else if(month1 >= 51){
             month2 = (month1*12.075)-110.25;
         }
-        if(next1>1&&next1<20){
+
+        if(next1 >= 1 && next1 <= 20){
             next2 = next1*7.35;
-        }else if(next1>21&&next1<60){
+        }else if(next1 >= 21 && next1 <= 60){
             next2 = (next1*9.45)-42;
-        }else if(next1>61&&next1<100){
+        }else if(next1 >= 61 && next1 <= 100){
             next2 = (next1*11.55)-168;
-        }else if(next1>101){
+        }else if(next1 >= 101){
             next2 = (next1*12.075)-220.5;
-    }
-        if(month1!=0){
+        }
+
+
+        if(monthlength != 0 && nextlength == 0){
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("每月抄表")
                     .setMessage("費用"+month2+"元")
-                    .setPositiveButton("OK",null)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            month.setText("");
+                            next.setText("");
+                        }
+                    })
                     .show();
-        }else{
+        }else if(nextlength !=0 && monthlength ==0) {
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("隔月抄表")
                     .setMessage("費用"+next2+"元")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            month.setText("");
+                            next.setText("");
+                        }
+                    })
+                    .show();
+        }else {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("警告")
+                    .setMessage("未輸入數字，無法計算")
                     .setPositiveButton("OK",null)
                     .show();
         }
