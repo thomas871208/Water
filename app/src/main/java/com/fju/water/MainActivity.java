@@ -1,6 +1,8 @@
 package com.fju.water;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
         month = findViewById(R.id.month);
         next = findViewById(R.id.next);
 
+        Button button = new Button(this);
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
        FloatingActionButton fab = findViewById(R.id.fab);
@@ -82,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(monthlength != 0 && nextlength == 0){
+        /*    Intent intent = new Intent(this,ResultActivity.class);
+            startActivity(intent);*/
+
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("每月抄表")
                     .setMessage("費用"+month2+"元")
