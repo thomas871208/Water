@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                money();
                 Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                intent.putExtra("MONTH2", month2);
                 startActivity(intent);
             }
         });
@@ -58,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    public  void  count(View view){
-        monthlength = month.getText().toString().length();
-        nextlength = next.getText().toString().length();
+    public  void money(){
         try {
             month1 = Integer.parseInt(month.getText().toString());
         }catch (Exception e){
@@ -91,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
         }else if(next1 >= 101){
             next2 = (next1*12.075)-220.5;
         }
+    }
+    public  void  count(View view){
+        monthlength = month.getText().toString().length();
+        nextlength = next.getText().toString().length();
+        money();
+
 
 
         if(monthlength != 0 && nextlength == 0){
