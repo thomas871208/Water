@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     double next2;
     int monthlength;
     int nextlength;
+    Boolean isNext = false;
 
 
     @Override
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         month = findViewById(R.id.month);
         next = findViewById(R.id.next);
-        Switch sw = findViewById(R.id.switch1);
+
 
         Button button = new Button(this);
         button = findViewById(R.id.button);
@@ -50,6 +52,19 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,ResultActivity.class);
                 intent.putExtra(getString(R.string.extra_MONTH2), month2);
                 startActivity(intent);
+                Switch sw = findViewById(R.id.switch1);
+                sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        isNext = isChecked;
+                        month.setText(R.string.monthly);
+                        if(isNext = false){
+                            //Monthly
+                        }else{
+                            //next
+                        }
+                    }
+                });
             }
         });
 
@@ -140,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
