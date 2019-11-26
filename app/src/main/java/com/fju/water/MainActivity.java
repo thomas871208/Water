@@ -17,12 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
     EditText month;
     EditText next;
     int month1;
     int next1;
+    Switch Switch1;
     double month2;
     double next2;
     int monthlength;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         month = findViewById(R.id.month);
         next = findViewById(R.id.next);
+        Switch sw = findViewById(R.id.switch1);
 
         Button button = new Button(this);
         button = findViewById(R.id.button);
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 money();
                 Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-                intent.putExtra("MONTH2", month2);
+                intent.putExtra(getString(R.string.extra_MONTH2), month2);
                 startActivity(intent);
             }
         });
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("每月抄表")
                     .setMessage("費用"+month2+"元")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             month.setText("");
